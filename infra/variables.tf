@@ -12,3 +12,8 @@ variable "region" {
   description = "The AWS region that will contain the bucket for the remote state"
   type        = string
 }
+
+variable "kponics_bucket" {
+  description = "AWS S3 bucket to use for kponics.com"
+  type        = string
+}
