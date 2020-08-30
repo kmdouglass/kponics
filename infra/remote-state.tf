@@ -2,7 +2,6 @@ resource "aws_s3_bucket" "terraform-state" {
   bucket        = var.bucket
   acl           = "private"
   force_destroy = false
-  region        = var.region
 
   server_side_encryption_configuration {
     rule {
