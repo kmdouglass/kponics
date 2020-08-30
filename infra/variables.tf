@@ -17,3 +17,8 @@ variable "kponics_bucket" {
   description = "AWS S3 bucket to use for kponics.com"
   type        = string
 }
+
+variable "www_kponics_bucket" {
+  description = "AWS S3 bucket to use for www.kponics.com"
+  type        = string
+}

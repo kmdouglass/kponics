@@ -31,3 +31,15 @@ data "aws_iam_policy_document" "kponics-bucket-policy" {
     }
   }
 }
+
+resource "aws_s3_bucket" "www-kponics-bucket" {
+  bucket = var.www_kponics_bucket
+
+  website {
+    redirect_all_requests_to = "kponics.com"
+  }
+
+  tags = {
+    Name = "www.kponics.com Bucket"
+  }
+}
