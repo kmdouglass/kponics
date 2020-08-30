@@ -1,5 +1,6 @@
 #+TITLE: Bootstrap a Project on AWS with Terraform
 #+AUTHOR: Kyle M. Douglass
+#+DATE: 2020-08-29
 #+EMAIL: kyle.m.douglass@gmail.com
 
 #+BEGIN_ABSTRACT
