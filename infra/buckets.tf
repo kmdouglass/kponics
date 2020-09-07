@@ -1,7 +1,6 @@
 resource "aws_s3_bucket" "kponics-bucket" {
   bucket = var.kponics_bucket
-  acl    = "public-read"
-  policy = data.aws_iam_policy_document.kponics-bucket-policy.json
+  acl    = "private"
 
   website {
     index_document = "index.html"
@@ -9,37 +8,49 @@ resource "aws_s3_bucket" "kponics-bucket" {
   }
 
   tags = {
-    Name = "kponics.com Bucket"
+    Name      = "kponics.com Bucket"
+    Terraform = "true"
   }
 }
 
-data "aws_iam_policy_document" "kponics-bucket-policy" {
+data "aws_iam_policy_document" "kponics-bucket-policy-document" {
   statement {
-    sid = "PublicReadGetObject"
+    sid = "CloudFrontGetObject"
 
     actions = [
       "s3:GetObject",
     ]
 
     resources = [
-      "arn:aws:s3:::${var.kponics_bucket}/*",
+      "${aws_s3_bucket.kponics-bucket.arn}/*",
     ]
 
     principals {
-      type        = "*"
-      identifiers = ["*"]
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.origin-access-identity.iam_arn]
     }
   }
 }
 
-resource "aws_s3_bucket" "www-kponics-bucket" {
-  bucket = var.www_kponics_bucket
+resource "aws_s3_bucket_policy" "kponics-bucket-policy" {
+  bucket = aws_s3_bucket.kponics-bucket.id
+  policy = data.aws_iam_policy_document.kponics-bucket-policy-document.json
+}
 
-  website {
-    redirect_all_requests_to = "kponics.com"
+resource "aws_s3_bucket" "kponics-distribution-logs-bucket" {
+  bucket = var.kponics_distribution_logs_bucket
+  acl    = "private"
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
   }
 
   tags = {
-    Name = "www.kponics.com Bucket"
+    Name      = "kponics.com Distribution Logs"
+    Terraform = "true"
   }
 }

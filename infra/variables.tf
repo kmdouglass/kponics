@@ -18,6 +18,16 @@ variable "kponics_bucket" {
   type        = string
 }
 
+variable "kponics_cloudfront_origin_id" {
+  description = "The CloudFront distribution's origin ID"
+  type        = string
+}
+
+variable "kponics_distribution_logs_bucket" {
+  description = "AWS S3 bucket to use for storing the CloudFront distribution logs"
+  type        = string
+}
+
 variable "www_kponics_bucket" {
   description = "AWS S3 bucket to use for www.kponics.com"
   type        = string
