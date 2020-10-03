@@ -1,15 +1,17 @@
 name: Build site
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
   build-site:
     name: Build site
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
-      - name: Build static files
-        run: echo "CHANGEME"
+      - uses: actions/checkout@v2
+      - name: Download and install pandoc
+        run: |
+          wget -O /tmp/pandoc.deb https://github.com/jgm/pandoc/releases/download/2.10.1/pandoc-2.10.1-1-amd64.deb
+          sudo dpkg -i /tmp/pandoc.deb
+      - name: Test pandoc
+        run: pandoc -v
