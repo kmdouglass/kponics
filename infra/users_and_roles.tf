@@ -2,12 +2,22 @@ resource "aws_iam_user" "kponics" {
   name = "kponics"
 
   tags = {
-    "Name" = "kponics"
+    "Name"      = "kponics"
+    "Terraform" = "true"
+  }
+}
+
+resource "aws_iam_user" "github-actions" {
+  name = "github-actions"
+
+  tags = {
+    "Name"      = "github-actions"
+    "Terraform" = "true"
   }
 }
 
 resource "aws_iam_role" "kponics-bucket-ops" {
-  name              = "kponics-bucket-ops"
+  name               = "kponics-bucket-ops"
   assume_role_policy = data.aws_iam_policy_document.kponics-bucket-ops-assume-role-policy-document.json
 }
 
@@ -56,7 +66,10 @@ data "aws_iam_policy_document" "kponics-bucket-ops-assume-role-policy-document" 
 
     principals {
       type = "AWS"
-      identifiers = [aws_iam_user.kponics.arn]
+      identifiers = [
+        aws_iam_user.kponics.arn,
+        aws_iam_user.github-actions.arn
+      ]
     }
   }
 }
