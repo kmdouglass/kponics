@@ -34,6 +34,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: site-artifacts
+          path: ./build
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -41,7 +42,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          role-duration-seconds: 300
+          role-duration-seconds: 900
       - name: Copy files to the production website with the AWS CLI
         run: |
           aws s3 sync build s3://kponics.com --delete

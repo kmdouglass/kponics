@@ -61,7 +61,8 @@ data "aws_iam_policy_document" "kponics-bucket-ops-policy-document" {
 data "aws_iam_policy_document" "kponics-bucket-ops-assume-role-policy-document" {
   statement {
     actions = [
-      "sts:AssumeRole"
+      "sts:AssumeRole",
+      "sts:TagSession"
     ]
 
     principals {
