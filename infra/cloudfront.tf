@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "kponics-distribution" {
   default_root_object = "index.html"
 
   logging_config {
-    bucket          = aws_s3_bucket.kponics-distribution-logs-bucket.bucket_domain_name
+    bucket = aws_s3_bucket.kponics-distribution-logs-bucket.bucket_domain_name
   }
 
   aliases = ["kponics.com", "www.kponics.com"]
