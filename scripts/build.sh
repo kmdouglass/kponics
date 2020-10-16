@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 set -o errexit
+set -o nounset
 
 BUILD_DIR=build
 SRC_DIR=src
